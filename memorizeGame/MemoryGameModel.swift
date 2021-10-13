@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct MemoryGameModel<cardContent> where cardContent: Equatable{
     
@@ -41,12 +42,12 @@ struct MemoryGameModel<cardContent> where cardContent: Equatable{
 //        return nil
 //    }
     
-    init ( numberOfCardsPair : Int , createCardContent: (Int) -> cardContent) {
+    init ( theme: Theme, createCardContent: (String) -> cardContent) {
         cards = Array<Card>()
         
-        for pairIndex in 0..<numberOfCardsPair {
-            cards.append(Card(content: createCardContent(pairIndex), id: pairIndex * 2))
-            cards.append( Card(content: createCardContent(pairIndex), id: (pairIndex * 2) + 1))
+        for pairIndex in 0..<theme.numberOfCardPair {
+            cards.append(Card(content: createCardContent(theme.emoji[pairIndex]), id: pairIndex * 2))
+            cards.append( Card(content: createCardContent(theme.emoji[pairIndex]), id: (pairIndex * 2) + 1))
         }
     }
     
@@ -54,10 +55,20 @@ struct MemoryGameModel<cardContent> where cardContent: Equatable{
     
     
     struct Card : Identifiable {
-        var isFaceUp : Bool = false
-        var isMatched : Bool = false
-        var content : cardContent
-        var id : Int
+        var isFaceUp = false
+        var isMatched = false
+        let content : cardContent
+        let id : Int
+    }
+    
+    struct Theme{
+        var themeName : String
+        var emoji : [String] = [["🚗","🚕","🦼","🛵","🚝","🚠"],["🏰","🚀","🛫","🏯","🚆","🚂","🦽"],
+                               ["☎️","📲","⌚️","🧿","🎥","⏰"]].randomElement()!
+        var numberOfCardPair : Int
+        var color : String
     }
     
 }
+
+

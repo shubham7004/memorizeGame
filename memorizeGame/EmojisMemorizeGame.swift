@@ -9,15 +9,31 @@ import SwiftUI
 
 class EmojisMemorizeGame : ObservableObject {
     
-    static var emojis = ["🚗","🚕","🦼","🛵","🚝","🚠","🛫","🏰","🚀","🏯","🚆","🚂","🦽","☎️","📲","⌚️","🧿","🎥","⏰"]
+    var newtheme : MemoryGameModel<String>.Theme
     
-    static func createMemoryGame() -> MemoryGameModel<String> {
-            MemoryGameModel(numberOfCardsPair: 4) { pairIndex in
-                emojis[pairIndex]
-            }
+    init() {
+        if newtheme.emoji.contains("🛫") {
+            newtheme.themeName = "theme 2"
+            newtheme.color = "red"
+        }
+        else if newtheme.emoji.contains("🚗") {
+            newtheme.themeName = "theme 1"
+            newtheme.color = "blue"
+        } else {
+            newtheme.themeName = "theme 3"
+            newtheme.color = "grey"
+        }
+        newtheme.numberOfCardPair = newtheme.emoji.count - 1
+        
+    }
+    
+    static func createMemoryGame( ) -> MemoryGameModel<String> {
+        MemoryGameModel(theme: newtheme, createCardContent: { element in
+            newtheme.emojis
+        })
         }
     
-    @Published private var model: MemoryGameModel<String> = createMemoryGame()
+    @Published private var model: MemoryGameModel<String> = createMemoryGame(themeArray: emojis)
     
     var cards : Array<MemoryGameModel<String>.Card> {
         return model.cards
@@ -29,3 +45,4 @@ class EmojisMemorizeGame : ObservableObject {
         model.choose(card)
     }
 }
+

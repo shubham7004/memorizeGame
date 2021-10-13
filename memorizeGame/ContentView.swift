@@ -23,7 +23,7 @@ struct ContentView: View {
                 }
             }
             .padding(/*@START_MENU_TOKEN@*/.horizontal/*@END_MENU_TOKEN@*/)
-            .foregroundColor(.gray)
+            .foregroundColor(.red)
             
         }
     }
@@ -56,8 +56,10 @@ struct cardView: View {
         ZStack{
             if card.isFaceUp {
                 shape.fill().foregroundColor(.white)
-                shape.strokeBorder(lineWidth: 3).foregroundColor(.red)
+                shape.strokeBorder(lineWidth: 3)
                 Text(card.content).font(.largeTitle)
+            } else if card.isMatched {
+                shape.opacity(0)
             }
             else {
                 shape.fill()
