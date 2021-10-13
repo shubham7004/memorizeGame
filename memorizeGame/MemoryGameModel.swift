@@ -11,7 +11,7 @@ import UIKit
 struct MemoryGameModel<cardContent> where cardContent: Equatable{
     
     private(set) var cards : Array<Card>
-    
+    private(set) var score : Int = 0
     private var indexOfTheOneAndOnlyFaceUpCard : Int?
     
     mutating func choose(_ card : Card) {
@@ -21,6 +21,12 @@ struct MemoryGameModel<cardContent> where cardContent: Equatable{
                 if cards[choosenIndex].content == cards[potentialMatchedIndex].content {
                     cards[choosenIndex].isMatched = true
                     cards[potentialMatchedIndex].isMatched = true
+                    score += 2
+                }
+                else{
+                    if cards[choosenIndex].alreadyCardSeen {
+                    score -= 1
+                    }
                 }
                 indexOfTheOneAndOnlyFaceUpCard = nil
             } else {
@@ -28,6 +34,7 @@ struct MemoryGameModel<cardContent> where cardContent: Equatable{
                     cards[index].isFaceUp = false
                 }
                 indexOfTheOneAndOnlyFaceUpCard = choosenIndex
+                cards[choosenIndex].alreadyCardSeen = true
             }
             cards[choosenIndex].isFaceUp.toggle()
         }
@@ -42,32 +49,24 @@ struct MemoryGameModel<cardContent> where cardContent: Equatable{
 //        return nil
 //    }
     
-    init ( theme: Theme, createCardContent: (String) -> cardContent) {
+    init ( numberOfPairsIndex : Int, createCardContent: (Int) -> cardContent) {
         cards = Array<Card>()
         
-        for pairIndex in 0..<theme.numberOfCardPair {
-            cards.append(Card(content: createCardContent(theme.emoji[pairIndex]), id: pairIndex * 2))
-            cards.append( Card(content: createCardContent(theme.emoji[pairIndex]), id: (pairIndex * 2) + 1))
+        for pairIndex in 0..<numberOfPairsIndex {
+            cards.append(Card(content: createCardContent(pairIndex), id: pairIndex * 2))
+            cards.append( Card(content: createCardContent(pairIndex), id: (pairIndex * 2) + 1))
         }
+        cards.shuffle()
     }
-    
-    
-    
     
     struct Card : Identifiable {
         var isFaceUp = false
         var isMatched = false
         let content : cardContent
         let id : Int
+        var alreadyCardSeen = false
     }
     
-    struct Theme{
-        var themeName : String
-        var emoji : [String] = [["🚗","🚕","🦼","🛵","🚝","🚠"],["🏰","🚀","🛫","🏯","🚆","🚂","🦽"],
-                               ["☎️","📲","⌚️","🧿","🎥","⏰"]].randomElement()!
-        var numberOfCardPair : Int
-        var color : String
-    }
     
 }
 

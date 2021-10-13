@@ -9,40 +9,66 @@ import SwiftUI
 
 class EmojisMemorizeGame : ObservableObject {
     
-    var newtheme : MemoryGameModel<String>.Theme
+    var newtheme : Theme
+    @Published private var model: MemoryGameModel<String>
     
     init() {
-        if newtheme.emoji.contains("🛫") {
-            newtheme.themeName = "theme 2"
-            newtheme.color = "red"
+        newtheme = theme.randomElement()!
+        newtheme.emoji.shuffle()
+        model = EmojisMemorizeGame.createMemoryGame(theme : newtheme)
+    }
+    var theme : Array<Theme> = [
+        Theme(themeName: "Vehical", emoji: ["🚗","🚕","🦼","🛵","🚝","🚠"], numberOfCardPair: 5, color: "darkGray"),
+        Theme(themeName: "Animals", emoji: ["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐸"], numberOfCardPair: 8, color: "red"),
+        Theme(themeName: "Nature", emoji: ["🌵","🎄","🌲","🌳","🌴","🌾","🍁","💐"], numberOfCardPair: 6, color: "green")
+    ]
+    
+    static func createMemoryGame(theme : Theme ) -> MemoryGameModel<String> {
+        var size : Int = theme.numberOfCardPair
+        if size > theme.emoji.count {
+            size = theme.emoji.count
         }
-        else if newtheme.emoji.contains("🚗") {
-            newtheme.themeName = "theme 1"
-            newtheme.color = "blue"
-        } else {
-            newtheme.themeName = "theme 3"
-            newtheme.color = "grey"
+        let model = MemoryGameModel<String>( numberOfPairsIndex: size) { pairIndex in
+            theme.emoji[pairIndex]
         }
-        newtheme.numberOfCardPair = newtheme.emoji.count - 1
-        
+        return model
     }
     
-    static func createMemoryGame( ) -> MemoryGameModel<String> {
-        MemoryGameModel(theme: newtheme, createCardContent: { element in
-            newtheme.emojis
-        })
+    var themeColor: Color  {
+    switch(newtheme.color) {
+        case "red" :
+            return .red
+            
+        case "darkGrey":
+            return .gray
+            
+        case "green":
+            return .green
+        default :
+            return .yellow
         }
-    
-    @Published private var model: MemoryGameModel<String> = createMemoryGame(themeArray: emojis)
+    }
     
     var cards : Array<MemoryGameModel<String>.Card> {
         return model.cards
     }
     
-    // Mark: - Intent(s)
+    var score: Int {
+        return model.score
+    }
+    // MARK: - Intent(s) 
     
     func choose(_ card : MemoryGameModel<String>.Card){
         model.choose(card)
     }
+    
+    //reset function
+    func resetGame(){
+        newtheme = theme.randomElement()!
+        newtheme.emoji.shuffle()
+        model = EmojisMemorizeGame.createMemoryGame(theme : newtheme)
+        
+    }
+    
 }
 

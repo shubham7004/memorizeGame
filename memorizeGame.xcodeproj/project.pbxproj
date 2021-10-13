@@ -13,6 +13,7 @@
 		08D24810270C3E7600A188FF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D2480F270C3E7600A188FF /* ContentView.swift */; };
 		08D24812270C3E7900A188FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08D24811270C3E7900A188FF /* Assets.xcassets */; };
 		08D24815270C3E7900A188FF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08D24814270C3E7900A188FF /* Preview Assets.xcassets */; };
+		08D2CAE42716BB210053B431 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D2CAE32716BB210053B431 /* Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		08D2480F270C3E7600A188FF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		08D24811270C3E7900A188FF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		08D24814270C3E7900A188FF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		08D2CAE32716BB210053B431 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				08D2480D270C3E7600A188FF /* memorizeGameApp.swift */,
 				08D2480F270C3E7600A188FF /* ContentView.swift */,
 				0868B5662710213B006CC5FD /* MemoryGameModel.swift */,
+				08D2CAE32716BB210053B431 /* Theme.swift */,
 				08D24811270C3E7900A188FF /* Assets.xcassets */,
 				08D24813270C3E7900A188FF /* Preview Content */,
 			);
@@ -145,6 +148,7 @@
 			files = (
 				0868B56B27102435006CC5FD /* EmojisMemorizeGame.swift in Sources */,
 				08D24810270C3E7600A188FF /* ContentView.swift in Sources */,
+				08D2CAE42716BB210053B431 /* Theme.swift in Sources */,
 				08D2480E270C3E7600A188FF /* memorizeGameApp.swift in Sources */,
 				0868B5672710213B006CC5FD /* MemoryGameModel.swift in Sources */,
 			);
